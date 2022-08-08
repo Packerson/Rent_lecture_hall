@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add hall</title>
+</head>
+<body>
+    <form action="" method="GET">
+
+
+<!--nie działają hiper łączą, dodać hiperłącze do strony dodania sali-->
+
+        <p><a href="./modify/{{hall.id_lecture_hall}}">Hall edit</a></p>
+        <p><a href="../room/delete/{{hall_details_list.id}}">Delete hall</a></p>
+        <p><a href="../room/reserve/{{hall_details_list.id}}">Booking hall</a></p>
+
+
+        <label>{{hall_details_list.hall_name}}</label> <br>
+        <label>{{hall_details_list.hall_capacity}}</label> <br>
+        <label>{{hall_details_list.projector}}</label> <br>
+        <p>Booking list</p> <br>
+
+        <table>
+            <tr>
+                <th>Booking date</th>
+                <th>Comment</th>
+            </tr>
+            {% for hall in hall_booking %}
+            <tr>
+                <td>{{hall.booked_date}}</td>
+                <td>{{hall.comment}}</td>
+            </tr>
+
+
+            {% endfor %}
+        </table>
+
+
+
+    </form>
+</body>
+</html>

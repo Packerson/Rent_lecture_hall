@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of all halls</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Hall lecture name</th>
+        <th>Hall capacity</th>
+        <th>Projector</th>
+        <th>Is avaiable?</th>
+        <th>Edit hall</th>
+        <th>Booked hall</th>
+        <th>Delete hall</th>
+    </tr>
+    {% for hall in hall_list %}
+    <tr>
+
+        <td>  <a href="../room/{{hall.id}}">{{hall.hall_name}}</a></td>
+        <td>{{ hall.hall_capacity }}</td>
+        <td>{{ hall.projector }}</td>
+        <td>{{ hall.id }}</td>
+        <td>  <a href="../room/modify/{{hall.id}}">modify</a></td>
+        <td>  <a href="../room/reserve/{{hall.id}}">booked</a></td>
+        <td>  <a href="../room/delete/{{hall.id}}">delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

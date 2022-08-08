@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add hall</title>
+</head>
+<body>
+    <form action="" method="POST">
+    <label>New hall name <input type="text" value="" placeholder="Hall name" name="hall_name"></label>
+        <label>Previous name:  {{hall_to_edit.hall_name}}</label> <br>
+
+    <label>new hall capacity <input type="text" value="" placeholder="Hall capacity" name="hall_capacity"></label>
+        <label>Previous capacity: {{hall_to_edit.hall_capacity}}</label> <br>
+
+    <label>Projector <input type="checkbox" value="True"  name="projector">  </label>
+        <label>Previous projector: {{hall_to_edit.projector}}</label> <br>
+    <input type="submit" value="Send">
+    </form>
+</body>
+</html>
