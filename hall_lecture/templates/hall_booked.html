@@ -6,10 +6,31 @@
 </head>
 <body>
     <form action="" method="POST">
+        <p><a href="../list-all">Hall list</a></p>
+
+
       <label for="date_field">Choose date:</label>
       <input type="date" id="date_field" name="date_field">
       <label>Comment <input type="text" value="" placeholder="add comment" name="comment_booked"></label>
     <input type="submit" value="Send">
+
+
+
+        <strong><p>Booking list:</p></strong>
+        <table>
+            <tr>
+                <th>Booking date</th>
+                <th>Comment</th>
+            </tr>
+            {% for hall in hall_booking %}
+            <tr>
+                <td>{{hall.booked_date}}</td>
+                <td>{{hall.comment}}</td>
+            </tr>
+
+
+            {% endfor %}
+        </table>
     </form>
 </body>
 </html>

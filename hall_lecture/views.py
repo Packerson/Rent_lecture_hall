@@ -29,22 +29,26 @@ def add_hall(request):
                     response.write(f"{hall_name_check},  hall name has to be unique")
                     return response
             except:
-                if int(request.POST.get("hall_capacity")) > 0:
-                    hall_capacity = int(request.POST.get("hall_capacity"))
-                else:
-                    response.write(f"Add hall capacity")
+                if request.POST.get("hall_capacity").isnumeric():
+                    if int(request.POST.get("hall_capacity")) > 0:
+                        hall_capacity = int(request.POST.get("hall_capacity"))
+                    else:
+                        response.write(f"Add hall capacity")
+                        return response
+                    if request.POST.get("projector"):
+                        projector = True
+                    else:
+                        projector = False
+                    new_hall = Hall()
+                    hall_name = request.POST.get("hall_name")
+                    new_hall.hall_name = hall_name
+                    new_hall.hall_capacity = hall_capacity
+                    new_hall.projector = projector
+                    new_hall.save()
+                    response = render(request, 'add_hall.html')
+                    response.write(f"New lecture hall '{hall_name}' add to base!")
                     return response
-                if request.POST.get("projector"):
-                    projector = True
-                else:
-                    projector = False
-                new_hall = Hall()
-                hall_name = request.POST.get("hall_name")
-                new_hall.hall_name = hall_name
-                new_hall.hall_capacity = hall_capacity
-                new_hall.projector = projector
-                new_hall.save()
-                response.write(f"New lecture hall '{hall_name}' add to base!")
+                response.write(f"capacity need to be a natural number")
                 return response
         response.write("add hall name")
         return response
@@ -113,9 +117,15 @@ def hall_delete(request, hall_id):
 @csrf_exempt
 def hall_booked(request, hall_id):
     response = HttpResponse()
-    hall_to_booked = Hall.objects.get(pk=hall_id)
+    args_details = {}
+    # hall_to_booked = Hall.objects.get(pk=hall_id)
+    hall = Hall.objects.get(pk=hall_id)
+    args_details['hall_details_list'] = Hall.objects.get(pk=hall_id)
+    args_details['hall_booking'] = (
+        Booked.objects.filter(id_lecture_hall=hall).filter(booked_date__gte=datetime.today()).order_by('booked_date'))
+
     if request.method == "GET":
-        response = render(request, 'hall_booked.html')
+        response = render(request, 'hall_booked.html', args_details)
         return response
     elif request.method == "POST":
         comment_booked = request.POST.get('comment_booked')
@@ -128,18 +138,22 @@ def hall_booked(request, hall_id):
             return response
         else:
             new_booked = Booked.objects.create(booked_date=data_field, comment=comment_booked,
-                                               id_lecture_hall=hall_to_booked)
-            response.write(f"Booked on date {data_field} , hall id {hall_id})")
-            response.write(f'<label> <a href="http://127.0.0.1:8000/room/list-all">Hall list</a></label>')
+                                               id_lecture_hall=hall)
+
+            response = render(request, 'hall_booked.html', args_details)
+            response.write(f"Booked on date {data_field} , hall id {hall_id}")
+            response.write(f''
+                           f'<label> <a href="http://127.0.0.1:8000/room/{hall_id}">Hall details</a></label>')
+
             return response
 
 
 def hall_details(request, hall_id):
     response = HttpResponse()
     args_details = {}
-    args_booked = {}
     hall = Hall.objects.get(pk=hall_id)
     args_details['hall_details_list'] = Hall.objects.get(pk=hall_id)
-    args_details['hall_booking'] = (Booked.objects.filter(id_lecture_hall=hall))
+    args_details['hall_booking'] = (
+        Booked.objects.filter(id_lecture_hall=hall).filter(booked_date__gte=datetime.today()).order_by('booked_date'))
     response = render(request, 'hall_details.html', args_details)
     return response
