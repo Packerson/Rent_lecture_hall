@@ -3,10 +3,9 @@ Django,  application allow to creat, edit, delete, booked or looking for a lectu
 
 
 
-TO DO;
-hyperlinks do not work, add a hyperlink to the room adding page, add a column in the room table, "availability",
+TO DO:
 
-add a list of all reservations in details hall
+in hall-list add column "availability" on today,
 
 add a hall finder
 
