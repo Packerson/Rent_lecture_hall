@@ -9,3 +9,5 @@ hyperlinks do not work, add a hyperlink to the room adding page, add a column in
 add a list of all reservations in details hall
 
 add a hall finder
+
+change code and put everthing into class
