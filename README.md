@@ -9,4 +9,6 @@ in hall-list add column "availability" on today,
 
 add a hall finder
 
-change code and put everthing into class
+optimaize code
+
+add bootstrap
