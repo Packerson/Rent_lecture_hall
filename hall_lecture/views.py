@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from hall_lecture.models import Hall, Booked
 from django.views import View
-from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 
 
@@ -13,23 +12,39 @@ def main_site(request):
     return response
 
 
-@csrf_exempt
-def add_hall(request):
-    response = HttpResponse()
-    if request.method == "GET":
+# def hall_capacity(request):
+#     response = HttpResponse()
+#     if int(request.POST.get("hall_capacity")) > 0:
+#         hall_capacity = int(request.POST.get("hall_capacity"))
+#     else:
+#         response.write(f"Add hall capacity")
+#         return response
+#     if request.POST.get("projector"):
+#         projector = True
+#         return projector
+#     else:
+#         projector = False
+#         return projector
+
+
+class AddHall(View):
+    def get(self, request):
+        response = HttpResponse()
         response = render(request, 'add_hall.html')
         return response
-    elif request.method == "POST":
+
+    def post(self, request):
+        response = HttpResponse()
         if request.POST.get("hall_name") and request.POST.get("hall_capacity"):
             # my_hall = Hall.objects.get()
             hall_name_check = request.POST.get("hall_name")
             try:
                 if Hall.objects.get(hall_name=hall_name_check):
-                    # if hall_name == hall_name_check:
                     response.write(f"{hall_name_check},  hall name has to be unique")
                     return response
             except:
                 if request.POST.get("hall_capacity").isnumeric():
+                    # hall_capacity(request)
                     if int(request.POST.get("hall_capacity")) > 0:
                         hall_capacity = int(request.POST.get("hall_capacity"))
                     else:
@@ -39,24 +54,21 @@ def add_hall(request):
                         projector = True
                     else:
                         projector = False
-                    new_hall = Hall()
-                    hall_name = request.POST.get("hall_name")
-                    new_hall.hall_name = hall_name
-                    new_hall.hall_capacity = hall_capacity
-                    new_hall.projector = projector
-                    new_hall.save()
+                    new_hall = Hall.objects.create(hall_name=request.POST.get("hall_name"),
+                                                   hall_capacity=hall_capacity,
+                                                   projector=projector)
                     response = render(request, 'add_hall.html')
-                    response.write(f"New lecture hall '{hall_name}' add to base!")
+                    response.write(f"New lecture hall '{new_hall.hall_name}' add to base!")
                     return response
                 response.write(f"capacity need to be a natural number")
-                return response
+            return response
         response.write("add hall name")
         return response
 
 
-def list_all_halls(request):
-    response = HttpResponse()
-    if request.method == "GET":
+class ListOfAllHalls(View):
+    def get(self, request):
+        response = HttpResponse()
         args = {}
         if len(Hall.objects.all()) == 0:
             response.write("There is no lecture hall")
@@ -66,23 +78,25 @@ def list_all_halls(request):
         return response
 
 
-@csrf_exempt
-def hall_modify(request, hall_id):
-    response = HttpResponse()
-    if request.method == "GET":
-        args = {}
-        args['hall_to_edit'] = Hall.objects.get(pk=hall_id)
-        response = render(request, 'modify_hall.html', args)
-        return response
-    elif request.method == "POST":
+class HallModify(View):
+    def get(self, request, hall_id):
+        response = HttpResponse()
+        if request.method == "GET":
+            args = {}
+            args['hall_to_edit'] = Hall.objects.get(pk=hall_id)
+            response = render(request, 'modify_hall.html', args)
+            return response
+
+    def post(self, request, hall_id):
+        response = HttpResponse()
         if request.POST.get("hall_name") and request.POST.get("hall_capacity"):
-            # my_hall = Hall.objects.get()
             hall_name_check = request.POST.get("hall_name")
             try:
                 if Hall.objects.get(hall_name=hall_name_check):
                     response.write(f"{hall_name_check},  hall name has to be unique")
                     return response
             except:
+                # hall_capacity(request)
                 if int(request.POST.get("hall_capacity")) > 0:
                     hall_capacity = int(request.POST.get("hall_capacity"))
                 else:
@@ -92,11 +106,9 @@ def hall_modify(request, hall_id):
                     projector = True
                 else:
                     projector = False
-                new_hall = Hall.objects.get(pk=hall_id)
-                new_hall.hall_name = hall_name_check
-                new_hall.hall_capacity = hall_capacity
-                new_hall.projector = projector
-                new_hall.save()
+                new_hall = Hall.objects.get(pk=hall_id, hall_name=hall_name_check,
+                                            hall_capacity=hall_capacity,
+                                            projector=projector)
                 response.write(
                     f"Edited hall '{hall_name_check}'! <br> <a href='http://127.0.0.1:8000/room/list-all'>Hall list</a></label>")
                 return response
@@ -104,30 +116,33 @@ def hall_modify(request, hall_id):
         return response
 
 
-def hall_delete(request, hall_id):
-    response = HttpResponse()
-    if request.method == "GET":
-        response.write(f"Hall of number {hall_id} is deleted")
-        hall_to_delete = Hall.objects.get(pk=hall_id)
-        hall_to_delete.delete()
-        response.write(f'<label> <a href="http://127.0.0.1:8000/room/list-all">Hall list</a></label>')
-        return response
+class HallDelete(View):
+    def get(self, request, hall_id):
+        response = HttpResponse()
+        if request.method == "GET":
+            response.write(f"Hall of number {hall_id} is deleted")
+            hall_to_delete = Hall.objects.get(pk=hall_id)
+            hall_to_delete.delete()
+            response.write(f'<label> <a href="http://127.0.0.1:8000/room/list-all">Hall list</a></label>')
+            return response
 
 
-@csrf_exempt
-def hall_booked(request, hall_id):
-    response = HttpResponse()
-    args_details = {}
-    # hall_to_booked = Hall.objects.get(pk=hall_id)
-    hall = Hall.objects.get(pk=hall_id)
-    args_details['hall_details_list'] = Hall.objects.get(pk=hall_id)
-    args_details['hall_booking'] = (
-        Booked.objects.filter(id_lecture_hall=hall).filter(booked_date__gte=datetime.today()).order_by('booked_date'))
-
-    if request.method == "GET":
+class HallBooked(View):
+    def get(self, request, hall_id):
+        response = HttpResponse()
+        args_details = {}
+        hall = Hall.objects.get(pk=hall_id)
+        args_details['hall_details_list'] = Hall.objects.get(pk=hall_id)
+        args_details['hall_booking'] = (
+            Booked.objects.filter(id_lecture_hall=hall).filter(booked_date__gte=datetime.today()).order_by(
+                'booked_date'))
         response = render(request, 'hall_booked.html', args_details)
         return response
-    elif request.method == "POST":
+
+    def post(self, request, hall_id):
+        response = HttpResponse()
+        args_details = {}
+        hall = Hall.objects.get(pk=hall_id)
         comment_booked = request.POST.get('comment_booked')
         data_field = request.POST.get('date_field')
         if Booked.objects.filter(booked_date=data_field, id_lecture_hall=hall_id):
@@ -148,12 +163,14 @@ def hall_booked(request, hall_id):
             return response
 
 
-def hall_details(request, hall_id):
-    response = HttpResponse()
-    args_details = {}
-    hall = Hall.objects.get(pk=hall_id)
-    args_details['hall_details_list'] = Hall.objects.get(pk=hall_id)
-    args_details['hall_booking'] = (
-        Booked.objects.filter(id_lecture_hall=hall).filter(booked_date__gte=datetime.today()).order_by('booked_date'))
-    response = render(request, 'hall_details.html', args_details)
-    return response
+class HallDetails(View):
+    def get(self, request, hall_id):
+        response = HttpResponse()
+        args_details = {}
+        hall = Hall.objects.get(pk=hall_id)
+        args_details['hall_details_list'] = Hall.objects.get(pk=hall_id)
+        args_details['hall_booking'] = (
+            Booked.objects.filter(id_lecture_hall=hall).filter(booked_date__gte=datetime.today()).order_by(
+                'booked_date'))
+        response = render(request, 'hall_details.html', args_details)
+        return response

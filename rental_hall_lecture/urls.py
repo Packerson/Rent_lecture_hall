@@ -17,22 +17,22 @@ from django.contrib import admin
 from django.urls import path
 from hall_lecture.views import (
     main_site,
-    add_hall,
-    list_all_halls,
-    hall_details,
-    hall_modify,
-    hall_booked,
-    hall_delete,
+    AddHall,
+    ListOfAllHalls,
+    HallDetails,
+    HallModify,
+    HallBooked,
+    HallDelete,
 
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('main/', main_site),
-    path('room/new', add_hall),
-    path('room/list-all', list_all_halls),
-    path('room/<int:hall_id>', hall_details),
-    path('room/modify/<int:hall_id>', hall_modify),
-    path('room/reserve/<int:hall_id>', hall_booked),
-    path('room/delete/<int:hall_id>', hall_delete),
+    path('room/new', AddHall.as_view()),
+    path('room/list-all', ListOfAllHalls.as_view()),
+    path('room/<int:hall_id>', HallDetails.as_view()),
+    path('room/modify/<int:hall_id>', HallModify.as_view()),
+    path('room/reserve/<int:hall_id>', HallBooked.as_view()),
+    path('room/delete/<int:hall_id>', HallDelete.as_view()),
 ]

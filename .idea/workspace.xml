@@ -1,8 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4dc2b621-61e3-400e-9e6f-cb1a74b76dc5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hall_lecture/templates/add_hall.html" beforeDir="false" afterPath="$PROJECT_DIR$/hall_lecture/templates/add_hall.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hall_lecture/templates/hall_booked.html" beforeDir="false" afterPath="$PROJECT_DIR$/hall_lecture/templates/hall_booked.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hall_lecture/templates/list_all_halls.html" beforeDir="false" afterPath="$PROJECT_DIR$/hall_lecture/templates/list_all_halls.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hall_lecture/templates/main_site.html" beforeDir="false" afterPath="$PROJECT_DIR$/hall_lecture/templates/main_site.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hall_lecture/templates/modify_hall.html" beforeDir="false" afterPath="$PROJECT_DIR$/hall_lecture/templates/modify_hall.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hall_lecture/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/hall_lecture/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rental_hall_lecture/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/rental_hall_lecture/urls.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2EiWXiXInsjUY9dKlp5SVjyFh47" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/pawel/workspace/ONL_PYT_W_19_podstawy_django_egzamin_probny/exam/exam_app/views.py"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4dc2b621-61e3-400e-9e6f-cb1a74b76dc5" name="Changes" comment="" />
+      <created>1663078926338</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1663078926338</updated>
+      <workItem from="1663078929070" duration="6978000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

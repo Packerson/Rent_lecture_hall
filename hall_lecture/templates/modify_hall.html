@@ -15,6 +15,7 @@
     <label>Projector <input type="checkbox" value="True"  name="projector">  </label>
         <label>Previous projector: {{hall_to_edit.projector}}</label> <br>
     <input type="submit" value="Send">
+         {% csrf_token %}
     </form>
 </body>
 </html>

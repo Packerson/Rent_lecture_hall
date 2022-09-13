@@ -10,6 +10,7 @@
     <label>Hall capacity <input type="text" value="" placeholder="Hall capacity" name="hall_capacity"></label>
     <label>Projector <input type="checkbox" value="True"  name="projector">  </label>
     <input type="submit" value="Send">
+         {% csrf_token %}
     </form>
 
     <br><br><br><br><br>
